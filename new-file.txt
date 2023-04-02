@@ -1,0 +1,3 @@
+some kind of text;
+modified;
+new changes.
