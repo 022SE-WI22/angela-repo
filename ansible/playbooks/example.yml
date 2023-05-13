@@ -1,0 +1,16 @@
+---
+- name: Copy file tp remote servers
+  hosts: web
+  become: true
+
+  tasks:
+    - name: copy file to remote services
+      copy:
+        src: example.txt
+        dest: /tmp
+
+    - name: modify file
+      lineinfile:
+        path: /tmp/example.txt
+        insertafter: EOF
+        line: "this is task2"     

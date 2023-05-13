@@ -1,0 +1,39 @@
+---
+- name: Install and start web server httpd
+  hosts: web
+  become: yes
+
+  tasks:
+    - name: Install httpd package
+      yum:
+        name: httpd
+        state: present 
+    
+    - name: Create index file
+      copy:
+        src: files/index.html
+        dest: /var/www/html/index.html
+
+    - name: start httpd service
+      service:
+        name: httpd
+        state: started
+        enabled: true
+
+    - name: stop firewalld
+      service:
+        name: firewalld
+        state: stopped    
+
+    - name: update httpd.conf
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^Listen'
+        line: 'Listen 8080'
+
+    - name: restart httpd service
+      service:
+        name: httpd
+        state: restarted
+       
+

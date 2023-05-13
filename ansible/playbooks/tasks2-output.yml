@@ -1,0 +1,14 @@
+---
+- name: check disk space
+  hosts: all
+  gather_facts: true
+  become: true
+
+  tasks:
+    - name: run df command to check disk space
+      shell: df -h
+      register: disk_space    #Save the output from previous task
+
+    - name: print disk space information
+      debug:                  #Print the variable on stand out STDOUT
+        var: disk_space.stdout_lines  
